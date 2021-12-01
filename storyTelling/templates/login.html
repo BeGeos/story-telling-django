@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Story Telling</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <div class="login__container">
+      <form id="login__form" method="POST" action="/login/">
+        {% csrf_token %}
+        <div class="form__redirect">
+          Go Back to <a href="{% url 'homepage' %}">Home</a>
+        </div>
+        {% if messages %}
+        <div class="error on">
+          {% for message in messages %}
+          <span id="login-error">Invalid Credentials</span>
+          {% endfor %}
+          <span id="close-error">&times;</span>
+        </div>
+        {% endif %}
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+        />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+        />
+        <button class="btn">Login</button>
+      </form>
+    </div>
+
+    <footer></footer>
+    <script src="{% static 'index.js' %}"></script>
+  </body>
+</html>

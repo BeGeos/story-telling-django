@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Story Telling</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <script
+      defer
+      src="https://kit.fontawesome.com/fcfbb66bbf.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="add-story">
+      <div class="success-view">
+        <h2>Thank You! 🎉</h2>
+        <p>Your story was received correctly</p>
+        <p>
+          The best stories will be included in this website with reference to
+          their authors, so keep an eye on that. Of course, you will receive an
+          email in case one of your stories will be displayed.
+        </p>
+        <p>
+          For now thank you very much for being an active user of this website,
+          I hope that you had fun and could also learn something in the process.
+          Feel free to write as many stories as you want, I am an avid reader
+          and I'd love to read them all. ♥️
+        </p>
+        <span>>BlockBusterGirl</span>
+      </div>
+      <form class="add-story__form scrollable" method="post">
+        {% csrf_token %}
+        <div class="add-story__header">
+          <h2>Write a Story</h2>
+          <span id="close-add-story">&times;</span>
+        </div>
+        <div class="error">
+          <span id="add-story-error">Invalid Request</span>
+          <span id="close-error">&times;</span>
+        </div>
+        <div class="write-story-instructions">
+          <h3>Instructions</h3>
+          <ul class="instruction-items">
+            <li>start the story with the sentence in the incipit</li>
+            <li>the story should be between 250-1000 words</li>
+            <li>avoid porn, vulgarities and plagiarism</li>
+          </ul>
+          <strong>Happy Writing! 😀</strong>
+        </div>
+        <label for="write-story-author">Author</label>
+        <input
+          type="text"
+          name="write-story-author"
+          id="write-story-author"
+          placeholder="Your name goes here"
+          required
+        />
+        <label for="title">Title</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Place your title here..."
+          required
+        />
+        <label for="first-line">Incipit</label>
+        <input
+          type="text"
+          name="first-line"
+          id="first-line"
+          placeholder="Once upon A time..."
+          maxlength="250"
+          readonly="readonly"
+          required
+        />
+        <label for="story-content">Story</label>
+        <textarea
+          name="story-content"
+          id="story-content"
+          cols="30"
+          rows="10"
+          required
+          maxlength="1020"
+        ></textarea>
+        <button class="btn">Send</button>
+      </form>
+    </div>
+    <header>
+      <div class="head__title">
+        <h2>Story Telling</h2>
+      </div>
+      <nav class="navbar">
+        <ul>
+          <a href="{% url 'homepage' %}"><li class="active">Home</li></a>
+          <a href="#"><li class="btn">Write A Story...</li></a>
+        </ul>
+      </nav>
+    </header>
+    <section id="write-section">
+      <!-- Section with Image and short intro description -->
+      <div class="hero write">
+        <div class="hero__overlay"></div>
+        <div class="hero__container">
+          <div class="hero__text">
+            <h1>Write your own story and unleash your creativity</h1>
+            <p>
+              Read the assignment below and think about a compelling story that
+              could go on from there. The story must be in English and you can
+              also send it here.
+            </p>
+            <p>
+              I can correct them, if you want and give my feedback, and the best
+              stories will be uploaded with a reference to their authors.
+            </p>
+            <p><strong>Let’s get started!</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="main__container">
+        <div class="instructions">
+          <h3>Instructions</h3>
+          <ul class="instruction-items">
+            <li>start the story with the sentence below</li>
+            <li>the story should be between 250-1000 words</li>
+            <li>avoid porn, vulgarities and plagiarism</li>
+          </ul>
+          <p>
+            Consider this an exercise for your story-telling skills. The more
+            effort you put in, the better the result!
+          </p>
+          <strong>Happy Writing! 😀</strong>
+        </div>
+        {% if request.user.is_authenticated %}
+        <form class="assignment-form">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="new-assignment"
+            id="new-assignment"
+            placeholder="Write new assignment here..."
+            required
+          />
+          <button id="add-assignment">&plus;</button>
+        </form>
+        {% endif %}
+        <div class="assignments-container">
+          <!-- <div class="assignment">
+            She went back and opened the mailbox. She found a letter. Then, she
+            unfolded it. Her look instantly changed. She stared at the letter
+            trembling...
+            <span class="remove-assignment">&minus;</span>
+          </div>
+          <div class="assignment">
+            Every day Mark returned home determined to tell his wife the truth.
+            But today there was no turning back, He was going to tell her
+            everything. Was this going to be the best day of his life or the
+            worst?...
+          </div>
+          <div class="assignment">
+            It was a bright cold day in April, and the clocks were striking
+            thirteen...
+          </div>
+          <div class="assignment">
+            I woke up with a start, something was in my room. The wardrobe doors
+            opened and it came out of my wardrobe...
+          </div>
+          <div class="assignment">
+            I looked at my watch and saw that it was going backwards...
+          </div> -->
+        </div>
+      </div>
+    </section>
+    <footer></footer>
+    <script src="{% static 'index.js' %}"></script>
+  </body>
+</html>
