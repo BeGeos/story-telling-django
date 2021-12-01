@@ -8,9 +8,9 @@ from .forms import RichFormField, UpdateRichFormField
 
 
 def home(request):
-    add_rich_text_form = RichFormField()
-    update_rich_text_form = UpdateRichFormField()
-    return render(request, "index.html", context={"add_form" : add_rich_text_form, "update_form": update_rich_text_form})
+    add_form = RichFormField()
+    update_form = UpdateRichFormField()
+    return render(request, "index.html", context={"add_form": add_form, "update_form": update_form})
 
 
 def not_found(request):

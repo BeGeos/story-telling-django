@@ -10,6 +10,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 
+from delta import html
+from bs4 import BeautifulSoup
+import json
+
 # Models
 from .models import Story, StoryMetric, GlobalMetric, Instruction
 
@@ -183,24 +187,28 @@ class StoryView(APIView):
         data = request.data
         title = data.get("title")
         headline = data.get("headline")
-        content = data.get("content")
+        rich_content = data.get("content")  # delta object -> Quill
         image_url = data.get("image_url")
 
         # Validation for required fields
-        if not title or not headline or not content or not image_url:
+        if not title or not headline or not rich_content or not image_url:
             return Response({
                 "message": "title, headline, content and image_url are required",
                 "error": "AttributeError"
             }, status=400)
 
         # Logged in user only if super user
-        author = User.objects.get(pk=2)
+        author = request.user
+        json_quill_content = json.loads(rich_content)
+        quill_content = json_quill_content.get("html")
+        content = BeautifulSoup(quill_content).get_text()
 
         try:
             new_story = Story.objects.create(
                 title=title,
                 headline=headline,
                 content=content,
+                rich_content=quill_content,
                 image_url=image_url,
                 author=author
             )

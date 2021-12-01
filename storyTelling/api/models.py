@@ -12,7 +12,7 @@ class Story(models.Model):
     headline = models.CharField(max_length=250, blank=False)
     slug = models.CharField(max_length=50, blank=True, null=True, unique=True)
     content = models.TextField(blank=False, null=False)
-    # content = QuillField()
+    rich_content = models.TextField(blank=True, null=True)
     image_url = models.URLField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="story")
     likes = models.IntegerField(default=0)

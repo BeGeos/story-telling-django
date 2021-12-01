@@ -7,6 +7,7 @@ db.sqlite3
 media
 config.json
 migrations/
+staticfiles/
 
 # Backup files #
 *.bak

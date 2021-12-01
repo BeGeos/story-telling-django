@@ -326,6 +326,7 @@ header.full > .head__title {
 
 .card__header button:hover {
   opacity: 1;
+  z-index: 99;
 }
 
 .card__header button::after {

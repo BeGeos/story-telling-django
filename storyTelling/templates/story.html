@@ -28,7 +28,7 @@
     </header>
     <div
       class="story-image"
-      style="background-image: url('{% static 'images/roma-kaiuk-jWs4lsGLe4I-unsplash.jpeg' %}');"
+      style="background-image: url('{{ story.image_url }}');"
     ></div>
     <section id="story-section">
       <!-- Section with Image and text -->
@@ -41,7 +41,7 @@
           </div>
           <div class="story-content">
             <span id="story-incipit"> {{ story.headline }}... </span>
-            {{ story.content.html|safe }}
+            {{ story.rich_content | safe }}
           </div>
         </div>
         <div class="actions">

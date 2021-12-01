@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django_quill',
     'api.apps.ApiConfig',
     'webApp.apps.WebappConfig',
-    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
@@ -147,8 +146,23 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Rich text editor configuration
-CKEDITOR_CONFIGS = {
+QUILL_CONFIGS = {
     'default': {
-            'width': "100%",
+        'theme': 'snow',
+        'modules': {
+            'syntax': True,
+            'toolbar': [
+                [
+                    {'font': []},
+                    {'header': []},
+                    {'align': []},
+                    'bold', 'italic', 'underline', 'strike', 'blockquote',
+                    {'color': []},
+                    {'background': []},
+                ],
+                ['code-block', 'link'],
+                ['clean'],
+            ]
         }
+    }
 }

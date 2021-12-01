@@ -2,6 +2,7 @@
 from django import forms
 from django_quill.forms import QuillFormField
 
+
 class RichFormField(forms.Form):
     content = QuillFormField()
 
