@@ -242,11 +242,14 @@ class StoryView(APIView):
             return Response(status=204)
         title = data.get("title")
         headline = data.get("headline")
-        content = data.get("content")
+        rich_content = data.get("content")  # rich content HTML
         image_url = data.get("image_url")
         likes = data.get("likes")
         views = data.get("views")
+        content = None
 
+        if rich_content:
+            content = BeautifulSoup(rich_content).get_text()
         try:
             story = self.queryset.filter(slug=kwargs.get("slug"))
             _id = story.first().id
@@ -258,6 +261,7 @@ class StoryView(APIView):
 
             updated = story.update(
                 title=title if title else F("title"),
+                rich_content=rich_content if rich_content else F("rich_content"),
                 content=content if content else F("content"),
                 headline=headline if headline else F("headline"),
                 image_url=image_url if image_url else F("image_url"),

@@ -239,7 +239,7 @@ if (homeSection) {
         document.getElementById("update-title").value = response.title;
         document.getElementById("update-first-line").value = response.headline;
         document.getElementById("update-story-content").value =
-          response.content;
+          response.rich_content;
         document.getElementById("update-image-url").value = response.image_url;
         return true;
       }
