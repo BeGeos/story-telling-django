@@ -14,6 +14,8 @@ from delta import html
 from bs4 import BeautifulSoup
 import json
 
+import threading
+
 # Models
 from .models import Story, StoryMetric, GlobalMetric, Instruction
 
@@ -21,7 +23,7 @@ from .models import Story, StoryMetric, GlobalMetric, Instruction
 from .serializer import StorySerializer, InstructionSerializer
 
 # Utils Mails
-from .utils.mail_utils import send_email
+from .utils.mail_utils import send_email_from_django
 
 
 def home_api(request):
@@ -54,7 +56,8 @@ def write_a_story(request):
         }, status=400)
     
     try:
-        send_email(title, headline, content, author)
+        mail = threading.Thread(target=send_email_from_django, args=(title, headline, content, author,))
+        mail.start()
         return Response({"message": "story is received"}, status=200)
     except Exception as e:
         return Response({

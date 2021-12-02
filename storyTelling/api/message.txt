@@ -1,0 +1,8 @@
+A new story was sent by: __author__
+
+The headline is: __headline__
+
+And the story goes as follows:
+__title__
+
+__content__
