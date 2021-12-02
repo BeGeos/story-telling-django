@@ -423,6 +423,11 @@ header.full > .head__title {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
+.vote-action {
+  display: flex;
+  gap: 10px;
+}
+
 .instruction-items {
   line-height: 1.6;
   margin-left: 2em;
