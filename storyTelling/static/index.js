@@ -632,7 +632,10 @@ if (writeSection) {
         for (let instruction of INSTRUCTIONS.instructions) {
           let assignment = document.createElement("div");
           assignment.classList.add("assignment");
-          assignment.textContent = instruction.text;
+          let assignmentText = document.createElement("div");
+          assignmentText.classList.add("assignment-text");
+          assignmentText.textContent = instruction.text;
+          assignment.appendChild(assignmentText);
           assignment.setAttribute("dataset", instruction.slug);
           assignment.setAttribute("datatext", instruction.text);
 
@@ -641,6 +644,10 @@ if (writeSection) {
             let deleteAssignment = document.createElement("span");
             deleteAssignment.classList.add("remove-assignment");
             deleteAssignment.innerHTML = "&minus;";
+            let privateAssignmentStats = document.createElement("div");
+            privateAssignmentStats.classList.add("assignment-stats");
+            privateAssignmentStats.innerHTML = `<span>Up Votes: ${instruction.up_votes}</span><span>Down Votes: ${instruction.down_votes}</span>`;
+            assignmentText.appendChild(privateAssignmentStats);
             assignment.appendChild(deleteAssignment);
           } else {
             // like <i class="fas fa-thumbs-up"></i>

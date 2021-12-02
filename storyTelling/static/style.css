@@ -423,6 +423,13 @@ header.full > .head__title {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
+.assignment-stats {
+  display: flex;
+  gap: 10px;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
 .vote-action {
   display: flex;
   gap: 10px;
