@@ -465,7 +465,7 @@ function makeStars() {
   document.body.appendChild(starTwo);
 }
 
-// makeStars();
+// setTimeout(() => makeStars(), 1000);
 
 // Select story section
 
@@ -602,6 +602,7 @@ if (writeSection) {
   const DOWNVOTE_INSTRUCTION_URL = "/api/instruction/unlike/";
   const addInstructionForm = writeSection.querySelector(".assignment-form");
   const assignmentContainer = document.querySelector(".assignments-container");
+  const mainContainer = document.querySelector(".main__container");
   let INSTRUCTIONS = {};
 
   let options = {
@@ -611,7 +612,7 @@ if (writeSection) {
 
   let observer = new IntersectionObserver(animateNavbar, options);
 
-  observer.observe(assignmentContainer);
+  observer.observe(mainContainer);
 
   async function fetchInstructions() {
     try {
