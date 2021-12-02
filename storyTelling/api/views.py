@@ -201,7 +201,7 @@ class StoryView(APIView):
         author = request.user
         json_quill_content = json.loads(rich_content)
         quill_content = json_quill_content.get("html")
-        content = BeautifulSoup(quill_content).get_text()
+        content = BeautifulSoup(quill_content, features="lxml").get_text()
 
         try:
             new_story = Story.objects.create(
@@ -249,7 +249,7 @@ class StoryView(APIView):
         content = None
 
         if rich_content:
-            content = BeautifulSoup(rich_content).get_text()
+            content = BeautifulSoup(rich_content, features="lxml").get_text()
         try:
             story = self.queryset.filter(slug=kwargs.get("slug"))
             _id = story.first().id
