@@ -593,6 +593,8 @@ if (writeSection) {
   // JS for the write section
   const INSTRUCTION_API_URL = "/api/instruction";
   const WRITE_STORY_API_URL = "/api/write-a-story";
+  const UPVOTE_INSTRUCTION_URL = "/api/instruction/like/";
+  const DOWNVOTE_INSTRUCTION_URL = "/api/instruction/unlike/";
   const addInstructionForm = writeSection.querySelector(".assignment-form");
   const assignmentContainer = document.querySelector(".assignments-container");
   let INSTRUCTIONS = {};
@@ -809,6 +811,78 @@ if (writeSection) {
       // open add story
       let headline = e.target.getAttribute("datatext");
       openWriteStory(headline);
+    } else if (
+      e.target.matches("i") &&
+      e.target.classList.contains("fa-thumbs-up")
+    ) {
+      // Give a like to instruction
+      let voteActions = e.target.closest(".vote-action");
+
+      if (voteActions.classList.contains("clicked")) {
+        return;
+      }
+      e.target.classList.add("red");
+      let slug = e.target.closest(".assignment").getAttribute("dataset");
+      // CSRF policy
+      const csrftoken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
+
+      try {
+        let request = await fetch(UPVOTE_INSTRUCTION_URL + slug, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+        });
+        if (request.status == 200) {
+          console.log("Thanks");
+          voteActions.classList.add("clicked");
+          return;
+        }
+        let response = await request.json();
+        throw new Error(response.message);
+      } catch (err) {
+        console.error(err);
+        return;
+      }
+    } else if (
+      e.target.matches("i") &&
+      e.target.classList.contains("fa-thumbs-down")
+    ) {
+      // Give a like to instruction
+      let voteActions = e.target.closest(".vote-action");
+
+      if (voteActions.classList.contains("clicked")) {
+        return;
+      }
+      e.target.classList.add("red");
+      let slug = e.target.closest(".assignment").getAttribute("dataset");
+      // CSRF policy
+      const csrftoken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
+
+      try {
+        let request = await fetch(DOWNVOTE_INSTRUCTION_URL + slug, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+        });
+        if (request.status == 200) {
+          console.log("Awww");
+          voteActions.classList.add("clicked");
+          return;
+        }
+        let response = await request.json();
+        throw new Error(response.message);
+      } catch (err) {
+        console.error(err);
+        return;
+      }
     }
   });
 }
