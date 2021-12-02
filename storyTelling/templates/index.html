@@ -99,10 +99,12 @@
       </div>
       <nav class="navbar">
         <ul>
-          <a href="#"><li class="active">Home</li></a>
-          {% if request.user.is_authenticated and request.user.is_superuser %}
-          <li id="add-story-btn" class="btn">Add Story</li>
-          {% endif %}
+          <div class="left-navbar">
+            <a href="#"><li class="active">Home</li></a>
+            {% if request.user.is_authenticated and request.user.is_superuser %}
+            <li id="add-story-btn" class="nav-item">Add Story</li>
+            {% endif %}
+          </div>
           <a href="{% url 'write-a-story' %}"
             ><li class="btn">Write A Story...</li></a
           >

@@ -150,6 +150,23 @@ header.full > .head__title {
   font-weight: 700;
 }
 
+.navbar .left-navbar {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.nav-item {
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+
+.nav-item:hover {
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
 /* .navbar li.active:after {
   content: "";
   position: absolute;
