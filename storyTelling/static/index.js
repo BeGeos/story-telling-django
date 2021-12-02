@@ -308,7 +308,12 @@ if (homeSection) {
       });
 
       if (request.status == 201) {
-        document.querySelector(".add-story").classList.remove("open");
+        document.querySelector(".add-story").style.animation =
+          "fadeOut 0.5s linear forwards";
+
+        setTimeout(() => {
+          document.querySelector(".add-story").classList.remove("open");
+        }, 600);
         DATA_OFFSET = 0;
         await fetchStories();
         cardGrid.innerHTML = "";

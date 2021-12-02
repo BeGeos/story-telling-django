@@ -561,6 +561,15 @@ header.full > .head__title {
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 #like-btn {
   cursor: pointer;
   position: relative;
