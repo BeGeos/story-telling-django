@@ -1,6 +1,7 @@
 # Email messaging utilities functions
 from django.core.mail import send_mail
 import json
+# just a comment
 
 with open("storyTelling/config.json", "r") as conf_file:
     CONFIG_FILE = json.load(conf_file)
