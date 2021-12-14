@@ -629,6 +629,41 @@ if (writeSection) {
     }
   }
 
+  function createInstructionElement(instruction) {
+    let assignment = document.createElement("div");
+    assignment.classList.add("assignment");
+    let assignmentText = document.createElement("div");
+    assignmentText.classList.add("assignment-text");
+    assignmentText.textContent = instruction.text;
+    assignment.appendChild(assignmentText);
+    assignment.setAttribute("dataset", instruction.slug);
+    assignment.setAttribute("datatext", instruction.text);
+
+    // Up/down votes or minus
+    if (INSTRUCTIONS.auth == 1) {
+      let deleteAssignment = document.createElement("span");
+      deleteAssignment.classList.add("remove-assignment");
+      deleteAssignment.innerHTML = "&minus;";
+      let privateAssignmentStats = document.createElement("div");
+      privateAssignmentStats.classList.add("assignment-stats");
+      privateAssignmentStats.innerHTML = `<span>Up Votes: ${instruction.up_votes}</span><span>Down Votes: ${instruction.down_votes}</span>`;
+      assignmentText.appendChild(privateAssignmentStats);
+      assignment.appendChild(deleteAssignment);
+    } else {
+      // like <i class="fas fa-thumbs-up"></i>
+      // dislike <i class="fas fa-thumbs-down"></i>
+      let votesAction = document.createElement("div");
+      votesAction.classList.add("vote-action");
+      let likeDislike = `
+            <i class="fas fa-thumbs-up" class="like-btn"></i>
+            <i class="fas fa-thumbs-down" class="dislike-btn"></i>
+            `;
+      votesAction.innerHTML = likeDislike;
+      assignment.appendChild(votesAction);
+    }
+    return assignment;
+  }
+
   async function displayInstructions() {
     try {
       // Populate instruction object
@@ -636,37 +671,7 @@ if (writeSection) {
       if (Object.keys(INSTRUCTIONS).length > 0) {
         assignmentContainer.innerHTML = "";
         for (let instruction of INSTRUCTIONS.instructions) {
-          let assignment = document.createElement("div");
-          assignment.classList.add("assignment");
-          let assignmentText = document.createElement("div");
-          assignmentText.classList.add("assignment-text");
-          assignmentText.textContent = instruction.text;
-          assignment.appendChild(assignmentText);
-          assignment.setAttribute("dataset", instruction.slug);
-          assignment.setAttribute("datatext", instruction.text);
-
-          // Up/down votes or minus
-          if (INSTRUCTIONS.auth == 1) {
-            let deleteAssignment = document.createElement("span");
-            deleteAssignment.classList.add("remove-assignment");
-            deleteAssignment.innerHTML = "&minus;";
-            let privateAssignmentStats = document.createElement("div");
-            privateAssignmentStats.classList.add("assignment-stats");
-            privateAssignmentStats.innerHTML = `<span>Up Votes: ${instruction.up_votes}</span><span>Down Votes: ${instruction.down_votes}</span>`;
-            assignmentText.appendChild(privateAssignmentStats);
-            assignment.appendChild(deleteAssignment);
-          } else {
-            // like <i class="fas fa-thumbs-up"></i>
-            // dislike <i class="fas fa-thumbs-down"></i>
-            let votesAction = document.createElement("div");
-            votesAction.classList.add("vote-action");
-            let likeDislike = `
-            <i class="fas fa-thumbs-up" class="like-btn"></i>
-            <i class="fas fa-thumbs-down" class="dislike-btn"></i>
-            `;
-            votesAction.innerHTML = likeDislike;
-            assignment.appendChild(votesAction);
-          }
+          let assignment = createInstructionElement(instruction);
           // append to list
           assignmentContainer.appendChild(assignment);
         }
@@ -678,6 +683,13 @@ if (writeSection) {
   }
 
   displayInstructions();
+
+  // Display single imstruction addition --> prepend when added
+  function prependInstruction(instruction) {
+    let assignment = createInstructionElement(instruction);
+    assignmentContainer.prepend(assignment);
+    assignment.style.animation = "popOut .2s linear forwards";
+  }
 
   if (addInstructionForm) {
     addInstructionForm.addEventListener("submit", async (e) => {
@@ -698,7 +710,8 @@ if (writeSection) {
         });
 
         if (request.status == 201) {
-          displayInstructions();
+          let instruction = await request.json();
+          prependInstruction(instruction);
           return addInstructionForm.reset();
         }
       } catch (err) {
